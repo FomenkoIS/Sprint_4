@@ -20,7 +20,7 @@ def collector_with_books(collector):
         collector.add_new_book(name)
         collector.set_book_genre(name, genre)
     return collector
-t
+
 class TestBooksCollector:
   
     def test_add_new_book_add_two_books(self, collector):
