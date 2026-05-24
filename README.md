@@ -1,4 +1,4 @@
-# qa_python
+# Sprint_4
 Тесты для BooksCollector
 
 Всего тестов:41
