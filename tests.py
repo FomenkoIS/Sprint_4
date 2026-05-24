@@ -20,17 +20,9 @@ def collector_with_books(collector):
         collector.add_new_book(name)
         collector.set_book_genre(name, genre)
     return collector
-
-# класс TestBooksCollector объединяет набор тестов, которыми мы покрываем наше приложение BooksCollector
-# обязательно указывать префикс Test
+t
 class TestBooksCollector:
-    # пример теста:
-    # обязательно указывать префикс test_
-    # дальше идет название метода, который тестируем add_new_book_
-    # затем, что тестируем add_two_books - добавление двух книг
-
-#Тесты на add_new_book    
-
+  
     def test_add_new_book_add_two_books(self, collector):
         collector = BooksCollector()
 
@@ -39,7 +31,6 @@ class TestBooksCollector:
 
         assert len(collector.get_books_genre()) == 2
 
-#Тесты на add_new_book на длину названия книги
     @pytest.mark.parametrize('book_name', [
         'A',
         'AbcdeAbcdeAbcdeAdcde',
@@ -65,13 +56,11 @@ class TestBooksCollector:
         collector.add_new_book('Сияние')
         assert len(collector.get_books_genre()) == 1
 
-#Тест add_new_book - новая книга добавляется в словарь с пустым значением названия жанра
     def test_add_new_book_empty_genre_added(self, collector):
 
         collector.add_new_book('Сияние')
         assert collector.books_genre['Сияние'] == ''
 
-#Тест set_book_genre - проверяем что метод устанавливает значение жанра по нозванию книги в словарь books_genre
     @pytest.mark.parametrize('book_name, genre', books_for_testing.items())
     def test_set_book_genre_sets_correct_genre(self, collector, book_name, genre):
         collector.add_new_book(book_name)
@@ -79,13 +68,11 @@ class TestBooksCollector:
 
         assert collector.get_book_genre(book_name) == genre
  
-#Тест get_book_genre - проверяем что метод возвращает названия жанра по названию книги
     @pytest.mark.parametrize('book_name, genre', books_for_testing.items())
     def test_get_book_genre_get_genre_name(self, collector_with_books, book_name, genre):
         
         assert  collector_with_books.get_book_genre(book_name) == genre
 
-#Тест get_books_with_specific_genre - проверяем что метод возвращает список книг с определённым жанром
     @pytest.mark.parametrize('genre, expected_books', [
         ('Ужасы', ['Сияние', 'Оно']),
         ('Комедии', ['Двенадцать стульев', 'Трое в лодке, не считая собаки']),
@@ -96,7 +83,6 @@ class TestBooksCollector:
     def test_get_books_with_specific_genre(self, collector_with_books, genre, expected_books):
         assert collector_with_books.get_books_with_specific_genre(genre) == expected_books
 
-#Тест get_books_for_children на книги, подходящие детям, добавляются в список
     def test_get_books_for_children_adult_book_not_added(self, collector_with_books):
        
         child_books = collector_with_books.get_books_for_children()
@@ -116,14 +102,12 @@ class TestBooksCollector:
     
         assert book_name not in child_books
 
-#Тест add_book_in_favorites - добавляем книгу в избранное
     @pytest.mark.parametrize('book_name', books_for_testing.keys())
     def test_add_book_in_favorites_favorite_books_added(self, book_name, collector_with_books):
 
         collector_with_books.add_book_in_favorites(book_name)
         assert book_name in collector_with_books.favorites
 
-#Тест delete_book_from_favorites - удаляем книгу из избранного
     @pytest.mark.parametrize('book_name', books_for_testing.keys())
     def test_delete_book_from_favorites_favorite_books_remove(self, book_name, collector_with_books):
 
@@ -131,14 +115,12 @@ class TestBooksCollector:
         collector_with_books.delete_book_from_favorites(book_name)
         assert book_name not in collector_with_books.favorites
 
-#Тест get_list_of_favorites_books - возвращает список любимых книг 
     def test_get_list_of_favorites_books_get_list_with_favorite_books(self, collector_with_books):
 
         all_books = list(collector_with_books.get_books_genre().keys())
 
         for book in all_books:
             collector_with_books.add_book_in_favorites(book)
-
         favorites = collector_with_books.get_list_of_favorites_books()
 
         assert favorites == all_books
